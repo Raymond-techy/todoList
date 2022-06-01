@@ -9,6 +9,7 @@ const generateTemplate = (todo) => {
         </li>
   `;
   list.innerHTML += html;
+  localStorage.setItem("todo", list.innerHTML);
 };
 //Add todos
 addForm.addEventListener("submit", (e) => {
@@ -25,6 +26,7 @@ list.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete")) {
     e.target.parentElement.remove();
   }
+  localStorage.setItem("todo", list.innerHTML);
 });
 //search Todos
 // const seachTodos(term)=>{
@@ -32,6 +34,7 @@ list.addEventListener("click", (e) => {
 // };
 const filterTodos = (term) => {
   const todoText = list.children;
+
   Array.from(todoText)
     .filter((todo) => !todo.textContent.toLowerCase().includes(term))
     .forEach((todo) => {
@@ -43,8 +46,13 @@ const filterTodos = (term) => {
     .forEach((todo) => {
       return todo.classList.remove("filter");
     });
+  // localStorage.setItem("todo", );
 };
 search.addEventListener("keyup", () => {
   const term = search.value.toLowerCase();
   filterTodos(term);
 });
+if (localStorage.getItem("todo")) {
+  var savedTodo = localStorage.getItem("todo");
+  list.innerHTML = savedTodo;
+}
